@@ -23,47 +23,115 @@ namespace DMTools
     public sealed partial class MainPage : Page
     {
         ItemCollection nameslist;
-        ItemCollection temp;
 
         public MainPage()
         {
             this.InitializeComponent();
             List.ItemsSource = nameslist;
+
+            RemoveButton.IsEnabled = false;
+            NextButton.IsEnabled = false;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Character s = new Character("", 0);
+            string name = NameBox.Text;
+            int roll = 0;
+            if (RollBox.Text != "")
+            {
+                roll = Convert.ToInt32(RollBox.Text);
+            }
+
+            Character s = new Character(name, roll);
             nameslist = List.Items;
             nameslist.Add(s);
             List.SelectedItem = 0;
+
+            NameBox.Text = "";
+            RollBox.Text = "";
         }
 
         private void List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Character c = new Character("", 0);
+            if(List.SelectedIndex == -1)
+            {
+                RemoveButton.IsEnabled = false;
+            }
+            else
+            {
+                RemoveButton.IsEnabled = true;
+            }
+            /* don't want this functionality anymore
+            Character c = new Character("", null);
             if(List.SelectedValue != null)
             {
                 c = (Character)List.SelectedValue;
             }
             NameBox.Text = c.Name;
             RollBox.Text = c.Roll.ToString();
+            */
         }
 
         private void NameBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            List.SelectedItem = 0;
+            //do stuff
 
-            var lst = List.Items.OfType<Character>().ToList();
-            lst.ElementAt(List.SelectedIndex).Name = NameBox.Text;
+        }
 
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(List.SelectedIndex != -1)
+            {
+                List.Items.RemoveAt(List.SelectedIndex);
+            }
+        }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            //sort the list, lock the add button, make top-most the active selection
+            List<Character> Characters = List.Items.OfType<Character>().ToList();
+
+            Characters = Characters.OrderBy(a => a.Roll).ToList();
+            Characters.Reverse();
 
             nameslist.Clear();
-            foreach (object a in lst)
+
+            foreach(Character c in Characters)
             {
-                nameslist.Add(a);
+                nameslist.Add(c);
             }
 
+            List.SelectedIndex = 0;
+
+            // enable/disable buttons
+            AddButton.IsEnabled = false;
+            NextButton.IsEnabled = true;
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            // select the next in the list, if bottom then cycle to top
+            if(List.SelectedIndex + 1 < List.Items.Count())
+            {
+                List.SelectedIndex++;
+            }
+            else
+            {
+                List.SelectedIndex = 0;
+            }
+        }
+
+        private void RollBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            RoutedEventArgs e2 = new RoutedEventArgs();
+
+            if(e.Key == Windows.System.VirtualKey.Enter)
+            {
+                
+                AddButton_Click(sender, e2);
+                NameBox.Focus(FocusState.Pointer);
+                e.Handled = true;
+            }
         }
     }
 
