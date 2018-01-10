@@ -13,13 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace DMTools
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         ItemCollection nameslist;
@@ -61,21 +56,6 @@ namespace DMTools
             {
                 RemoveButton.IsEnabled = true;
             }
-            /* don't want this functionality anymore
-            Character c = new Character("", null);
-            if(List.SelectedValue != null)
-            {
-                c = (Character)List.SelectedValue;
-            }
-            NameBox.Text = c.Name;
-            RollBox.Text = c.Roll.ToString();
-            */
-        }
-
-        private void NameBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //do stuff
-
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
@@ -127,11 +107,18 @@ namespace DMTools
 
             if(e.Key == Windows.System.VirtualKey.Enter)
             {
-                
                 AddButton_Click(sender, e2);
                 NameBox.Focus(FocusState.Pointer);
                 e.Handled = true;
             }
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            StartButton.IsEnabled = true;
+            AddButton.IsEnabled = true;
+            StopButton.IsEnabled = false;
+            NextButton.IsEnabled = false;
         }
     }
 

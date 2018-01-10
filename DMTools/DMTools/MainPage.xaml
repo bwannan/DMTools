@@ -42,7 +42,7 @@
                 Content="Stop"
                 Width="100"
                 RelativePanel.Below="NextButton"
-                RelativePanel.AlignLeftWith="NextButton"/>
+                RelativePanel.AlignLeftWith="NextButton" Click="StopButton_Click"/>
 
         <TextBlock x:Name="namePrompt"
                    Margin="20, 0, 0, 0"
@@ -55,7 +55,7 @@
                  RelativePanel.RightOf="namePrompt"
                  RelativePanel.AlignVerticalCenterWith="namePrompt" 
                  HorizontalAlignment="Left" 
-                 Width="150" TextChanged="NameBox_TextChanged"/>
+                 Width="150"/>
 
         <TextBlock x:Name="rollPrompt"
                    Text="Roll:"
