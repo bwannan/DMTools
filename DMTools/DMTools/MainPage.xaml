@@ -69,6 +69,17 @@
                  RelativePanel.AlignVerticalCenterWith="rollPrompt"
                  RelativePanel.RightOf="rollPrompt" KeyDown="RollBox_KeyDown"/>
 
+        <TextBlock x:Name="imgPrompt"
+                   Text="Image:"
+                   Margin="0, 28, 0, 0"
+                   RelativePanel.AlignRightWith="rollPrompt"
+                   RelativePanel.Below="rollPrompt"/>
+
+        <ComboBox x:Name="ImageBox"
+                  Margin="2, 28, 0, 0"
+                  RelativePanel.RightOf="imgPrompt"
+                  RelativePanel.AlignVerticalCenterWith="imgPrompt"/>
+
         <ListView x:Name="List" RelativePanel.Below="Title" SelectionChanged="List_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:Character">
@@ -85,6 +96,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0"/>
 
     </RelativePanel>
 </Page>

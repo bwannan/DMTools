@@ -18,9 +18,11 @@ namespace DMTools
     public sealed partial class MainPage : Page
     {
         ItemCollection nameslist;
-
+        Image filler;
+        
         public MainPage()
         {
+            
             this.InitializeComponent();
             List.ItemsSource = nameslist;
 
@@ -37,7 +39,7 @@ namespace DMTools
                 roll = Convert.ToInt32(RollBox.Text);
             }
 
-            Character s = new Character(name, roll);
+            Character s = new Character(name, roll, filler);
             nameslist = List.Items;
             nameslist.Add(s);
             List.SelectedItem = 0;
@@ -126,11 +128,13 @@ namespace DMTools
     {
         public string Name { get; set; }
         public int Roll { get; set; }
+        public Image Img { get; set; }
 
-        public Character(string name, int roll)
+        public Character(string name, int roll, Image img)
         {
             Name = name;
             Roll = roll;
+            Img = img;
         }
     }
 }
