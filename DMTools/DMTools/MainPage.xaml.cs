@@ -19,6 +19,7 @@ namespace DMTools
     {
         ItemCollection nameslist;
         Image filler;
+        Image temp;
         
         public MainPage()
         {
